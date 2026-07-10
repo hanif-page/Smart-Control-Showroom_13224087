@@ -1,13 +1,11 @@
-async function execute(device, command) {
+async function execute(device, command, currentState) {
   console.log(`[SwitchBot Adapter] Sending Cloud API command "${command}" to ${device.name}`);
+
+  // added to support the usage of React Frontend
+  const power = command === 'turnOn' ? 'on' : command === 'turnOff' ? 'off' : currentState.power;
+
   await new Promise(resolve => setTimeout(resolve, 200));
-  newState = {
-    power: "on"
-  }
-  if(command == "turnOff"){
-    newState.power = "off"
-  }
-  return { success: true, newState: newState };
+  return { success: true, newState: { power } };
 }
 
 module.exports = { execute };

@@ -1,8 +1,14 @@
-async function execute(device, command) {
+async function execute(device, command, currentState) {
   console.log(`[Roomba Adapter] Publishing MQTT command "${command}" to ${device.name}`);
-  console.log(`[Roomba Adapter] Broker at: ${device.localIP}`);
+
+  // added to support the usage of React Frontend
+  let status = currentState.status || 'idle';
+  let power = currentState.power || 'off';
+  if (command === 'turnOn') { power = 'on'; status = 'cleaning'; }
+  if (command === 'turnOff') { power = 'off'; status = 'idle'; }
+
   await new Promise(resolve => setTimeout(resolve, 150));
-  return { success: true, newState: { status: "cleaning" } };
+  return { success: true, newState: { power, status } };
 }
 
 module.exports = { execute };

@@ -42,3 +42,7 @@ Content-Type: application/json
   "deviceID": "nonexistent_device",
   "command": "turnOn"
 }
+
+### GET ALL DEVICES
+GET http://localhost:3000/api/devices
+Content-Type: application/json

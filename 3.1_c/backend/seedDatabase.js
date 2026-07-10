@@ -8,16 +8,16 @@ async function populateDummyDataToDB() {
   await Device.deleteMany({});
   await Device.insertMany([
     {
-      deviceID: "light_meeting01",
-      name: "Meeting Room Light",
+      deviceID: "room_light01",
+      name: "Room Light 01",
       type: "SwitchBot",
       protocol: "CloudAPI",
       credentials: { token: "dummy-switchbot-token" },
       glbObjectID: "mesh_light_meeting01"
     },
     {
-      deviceID: "ac_showroom01",
-      name: "Showroom AC",
+      deviceID: "main_ac01",
+      name: "Main AC 01",
       type: "NatureRemo",
       protocol: "LocalAPI",
       localIP: "192.168.1.50",
@@ -26,7 +26,7 @@ async function populateDummyDataToDB() {
     },
     {
       deviceID: "roomba01",
-      name: "Roomba Cleaner",
+      name: "Roomba Cleaner 01",
       type: "Roomba",
       protocol: "MQTT",
       localIP: "192.168.1.60",
