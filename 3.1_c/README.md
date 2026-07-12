@@ -2,7 +2,7 @@
 
 ### IoT-PLC Team Case Study - ITB de Labo 2026 Recruitment
 
-##### Developed by Muhammad _Ammar Hanif (13224087)_
+##### Developed by _Muhammad Ammar Hanif (13224087)_
 
 ## Overview
 
@@ -42,7 +42,7 @@ project-root/
 │   ├── routes/
 │   │   ├── deviceRoutes.js
 │   │   └── webhookRoutes.js
-│   ├── seed.js                     # Populates dummy device registry in MongoDB
+│   ├── seedDatabase.js             # Populates dummy device registry in MongoDB
 │   ├── server.js                   # Main entry point, this file wires all modules together
 │   └── package.json
 │
@@ -84,7 +84,7 @@ Adding a new device type requires only a new adapter file, so no changes to the 
 | MongoDB | Static, rarely-changing metadata | Device registry, credentials, protocol type, GLB digital twin mapping |
 | Redis | Live, frequently-changing state | Current power/temp/status per device, with real-time pub/sub |
 
-**Real-time sync layer:** Redis keyspace notifications → Socket.IO server → all connected dashboard clients, so every state change (regardless of source) reaches every open browser session simultaneously.
+**Real-time sync layer:** Redis keyspace notifications -> Socket.IO server -> all connected dashboard clients, so every state change (regardless of source) reaches every open browser session simultaneously.
 
 **One-time Redis Keyspace Notifications** 
 ```bash
