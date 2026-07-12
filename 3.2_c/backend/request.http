@@ -1,0 +1,48 @@
+### Turn ON Meeting Room Light (SwitchBot - Cloud API)
+POST http://localhost:3000/api/devices/command
+Content-Type: application/json
+
+{
+  "deviceID": "light_meeting01",
+  "command": "turnOn"
+}
+
+### Turn OFF Meeting Room Light
+POST http://localhost:3000/api/devices/command
+Content-Type: application/json
+
+{
+  "deviceID": "light_meeting01",
+  "command": "turnOff"
+}
+
+### Set Showroom AC (Nature Remo - Local API)
+POST http://localhost:3000/api/devices/command
+Content-Type: application/json
+
+{
+  "deviceID": "ac_showroom01",
+  "command": "setTemp24"
+}
+
+### Start Roomba Cleaning (MQTT)
+POST http://localhost:3000/api/devices/command
+Content-Type: application/json
+
+{
+  "deviceID": "roomba01",
+  "command": "start"
+}
+
+### Test invalid device (should return 400 error)
+POST http://localhost:3000/api/devices/command
+Content-Type: application/json
+
+{
+  "deviceID": "nonexistent_device",
+  "command": "turnOn"
+}
+
+### GET ALL DEVICES
+GET http://localhost:3000/api/devices
+Content-Type: application/json
