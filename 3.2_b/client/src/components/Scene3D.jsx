@@ -30,18 +30,18 @@ export default function Scene3D({ states }) {
                 <DeviceBox
                     position={[-3,0,0]}
                     label="Room Light 01"
-                    isOn={states.room_light01?.power === 'on'}
+                    isOn={states.main_light_01?.power === 'on'}
                 />
                 <DeviceBox
                     position={[0,0,0]}
                     // label="Main AC 01"
-                    label={`Main AC 01 ${(states.main_ac01?.power === 'on') ? `(${states.main_ac01?.temp}° C)` : ""}`}
-                    isOn={states.main_ac01?.power === 'on'}
+                    label={`Main TV 01 ${(states.main_ac01?.power === 'on') ? `(${states.main_ac01?.temp}° C)` : ""}`}
+                    isOn={states.main_tv_01?.power === 'on'}
                 />
                 <DeviceBox
                     position={[3,0,0]}
                     label="Roomba Cleaner 01"
-                    isOn={states.roomba01?.power === 'on'}
+                    isOn={states.main_roomba_01?.power === 'on'}
                 />
 
                 <gridHelper args={[10,10]} />

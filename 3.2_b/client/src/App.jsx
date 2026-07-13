@@ -3,7 +3,7 @@ import DeviceCard from './components/DeviceCard';
 import Scene3D from './components/Scene3D';
 
 export default function App() {
-  const { devices, states, sendCommand } = useDeviceSocket();
+  const { devices, states, sendCommand, simulatePhysicalPush } = useDeviceSocket();
 
   return (
     <div className="min-h-screen py-4 px-4">
@@ -47,7 +47,7 @@ export default function App() {
                   key={`physical-${d.deviceID}`}
                   device={d}
                   state={states[d.deviceID]}
-                  onCommand={sendCommand}
+                  onCommand={(id, command) => simulatePhysicalPush(id, states[id], command)}
                 />
               ))}
             </div>
