@@ -33,7 +33,10 @@ async function start() {
     // added to support the usage of React Frontend
     initSocket(server);
     await listenToRedisChanges();
-    startPolling();
+
+    // commented the startPolling because I have implemented the active-push changes inititiative from each of the Physical Device Representation
+    // startPolling();
+    
     await startMqttSubscriber();
     server.listen(PORT, () => {
         console.log(`Server running on port ${PORT}`);

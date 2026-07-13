@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 // seed.js, It's run once to insert dummy devices
 const mongoose = require('mongoose');
 const Device = require('./models/deviceCompleteModel');
@@ -29,7 +31,8 @@ async function populateDummyDataToDB() {
       name: "Main Roomba 01",
       type: "Roomba",
       protocol: "MQTT",
-      localIP: "192.168.1.60",
+      // localIP: "192.168.1.60", 
+      localIP: "broker.emqx.io", // public test brokers which allow free connection 
       credentials: { blid: "dummy-blid", password: "dummy-password" },
       glbObjectID: "Main_Roomba_01"
     }

@@ -47,7 +47,7 @@ function GlobalLoader() {
 }
 
 export default function App() {
-  const { devices, states, sendCommand } = useDeviceSocket();
+  const { devices, states, sendCommand, simulatePhysicalPush } = useDeviceSocket();
 
   return (
     <>    
@@ -96,7 +96,7 @@ export default function App() {
                       key={`physical-${d.deviceID}`}
                       device={d}
                       state={states[d.deviceID]}
-                      onCommand={sendCommand}
+                      onCommand={(id, command) => simulatePhysicalPush(id, states[id], command)}
                     />
                   ))}
                 </div>
