@@ -7,9 +7,9 @@ University ID: 13224087
 
 #### Document Output
 
-[Document Report (PDF, A4)]()
+[Document Report (PDF, A4)](https://drive.google.com/file/d/1wrcnYzJ9JP_aNsHeiH6qm3KswfS-WW93/view?usp=sharing)
 
-[Complete Program Demonstration & Explanation (drive link)]()
+[Complete Program Demonstration & Explanation (drive link)](https://drive.google.com/file/d/17y_mdCRaBiCSgBMaK1Z9le9QxE--eeMH/view?usp=sharing)
 
 [Complete Program README.md](https://github.com/hanif-page/Smart-Control-Showroom_13224087/tree/main/3.2_c#readme)
 
@@ -19,4 +19,4 @@ University ID: 13224087
 [Answer 3.2.B](https://github.com/hanif-page/Smart-Control-Showroom_13224087/tree/main/3.2_b)
 [Answer 3.2.C](https://github.com/hanif-page/Smart-Control-Showroom_13224087/tree/main/3.2_c)
 
-##### _Sincerely, regardless of the recruitment result later, Thank You ITB de Labo 2026 for the Opportunity!_ (Hanif, 13224087)
+##### _Sincerely, Thank You ITB de Labo 2026 for the Opportunity!_ (Hanif, 13224087)
