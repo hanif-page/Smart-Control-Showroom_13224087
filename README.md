@@ -11,6 +11,8 @@ University ID: 13224087
 
 [Complete Program Demonstration & Explanation (drive link)]()
 
+[Complete Program README.md](https://github.com/hanif-page/Smart-Control-Showroom_13224087/tree/main/3.2_c#readme)
+
 #### For complete program-based solution documentation, please refer to each of the sub-folder github repo answer below
 
 [Answer 3.1.C](https://github.com/hanif-page/Smart-Control-Showroom_13224087/tree/main/3.1_c)
