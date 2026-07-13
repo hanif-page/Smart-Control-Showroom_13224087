@@ -33,36 +33,6 @@ export default function DeviceCard({ device, state, onCommand }) {
         </button>
       </div>
 
-      {/* {device.type === 'NatureRemo' && (
-        <div className={`flex items-center gap-2 text-sm mt-2 ${
-            isOn ? 'opacity-100' : 'opacity-20'
-        }`} 
-        >
-          <span className="text-gray-400">Temperature:</span>
-          <span className="font-bold text-green-600">{state?.temp ?? '--'}° C</span>
-          <button
-            onClick={() => {
-              if(isOn) onCommand(device.deviceID, 'decreaseTemp');
-            }}
-            className={`px-2 border rounded ${
-              !isOn ? 'cursor-none' : ''
-            }`}
-          >
-            -
-          </button>
-          <button
-            onClick={() => {
-              if(isOn) onCommand(device.deviceID, 'increaseTemp');
-            }}
-            className={`px-2 border rounded ${
-              !isOn ? 'cursor-none' : ''
-            }`}
-          >
-            +
-          </button>
-        </div>
-      )} */}
-
       {device.type === 'Roomba' && (
         <div className="text-sm mt-2 text-gray-400 text-left capitalize">
           Status: 

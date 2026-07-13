@@ -8,7 +8,7 @@
 
 This project implements a device orchestration layer that abstracts multiple IoT communication protocols (Cloud API, Local API, MQTT) behind a single unified command interface, following a **Facade Design Pattern**. It includes a live-syncing Digital Twin dashboard demonstrating bidirectional state consistency between physical devices and their web app representation.
 
-[Quick Demo Video (X:XX minute)]()
+[Quick Demo Video (2:21 minute)](https://drive.google.com/file/d/1giUE4374Iv0AmEewBKTBCG8F481vPmaK/view?usp=sharing)
 
 ## Solution Screenshot (Web App form)
 ![Screenshot 1](./client/public/web_app_screenshot1.png)
@@ -27,8 +27,9 @@ project-root/
 │   │   ├── redis.js                
 │   │   └── socket.js               
 │   ├── models/
-│   │   ├── deviceCompleteModel.js  
-│   │   └── deviceStateModel.js     
+│   │   ├── deviceCompleteModel.js
+│   │   ├── deviceStateModel.js  
+│   │   └── cameraModel.js          # NEW, for the camera feature
 │   ├── adapters/
 │   │   ├── switchBotAdapter.js     
 │   │   ├── natureRemoAdapter.js    
@@ -38,13 +39,18 @@ project-root/
 │   │   ├── statePoller.js          
 │   │   └── mqttSubscriber.js       
 │   ├── controllers/
-│   │   ├── deviceController.js     
-│   │   └── webhookController.js    
+│   │   ├── deviceController.js
+│   │   ├── webhookController.js     
+│   │   └── cameraController.js     # NEW, for the camera feature
 │   ├── routes/
 │   │   ├── deviceRoutes.js
-│   │   └── webhookRoutes.js
-│   ├── seedDatabase.js             
-│   ├── server.js                   
+│   │   ├── webhookRoutes.js
+│   │   └── cameraRoutes.js         # NEW, for the camera feature
+│   ├── seedDatabase.js
+│   ├── seedCamerasDB.js            # NEW, for the camera feature
+│   ├── go2rtc/
+│   │   └── go2rtc.yaml             # NEW, for the camera feature             
+│   ├── server.js                   # Updated, for the camera feature                
 │   └── package.json
 │
 └── client/                         # Frontend (React + r3f + Vite + Tailwind CSS)
@@ -54,11 +60,12 @@ project-root/
     ├── src/
     │   ├── components/
     │   │   ├── DeviceCard.jsx
-    |   |   ├── StatusDot.jsx   
-    │   │   └── Scene3D.jsx         # NEW, a minimal r3f 3D Digital Twin (suplement to answer 3.2.b)
+    |   |   ├── StatusDot.jsx
+    |   |   ├── Scene3D.jsx   
+    │   │   └── CCTVViewer.jsx      # NEW, for the camera feature
     │   ├── hooks/
     │   │   └── useDeviceSocket.js  
-    │   ├── App.jsx                 # UPDATED, add the 3D Digital Twin section
+    │   ├── App.jsx                 # UPDATED, for the camera feature
     │   ├── main.jsx
     │   └── index.css
     ├── index.html

@@ -1,0 +1,16 @@
+streams:
+  cam_ipad:
+    - rtsp://192.168.18.180/stream # My Ipad IP!
+  cam_iphone:
+    - rtsp://192.168.18.28/stream # My Iphone IP!
+
+api:
+  listen: ":1984"
+  # origin: "*" # for production, MAKE SURE THIS IS CHANGED TO THE ONLY WEBSITE DOMAIN!
+  # origin: "https://tag-land-aluminum-magic.trycloudflare.com" # cloudflared frontend!
+  origin: "https://hanif-macbook.taile1094b.ts.net" # tailscale frontend!
+
+webrtc:
+  listen: ":8555"  
+  candidates:
+  - 192.168.18.29:8555

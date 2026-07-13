@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const connectMongo = require("./config/mongo");
 const { connectRedis } = require("./config/redis");
@@ -11,12 +13,24 @@ const { startPolling } = require('./services/statePoller');
 const { startMqttSubscriber } = require('./services/mqttSubscriber');
 const webhookRoutes = require('./routes/webhookRoutes');
 
+const cameraRoutes = require('./routes/cameraRoutes'); // added to support the camera setup
+
 // added to support the usage of React Frontend
 const app = express();
-app.use(cors()); // This line Enable CORS for all incoming Express HTTP requests (fixing the CORS problem)
+app.use(cors());
+// app.use(cors({
+//     // Allow both the Tailscale URL and localhost
+//     origin: [
+//         process.env.FRONTEND_URL, 
+//         'http://localhost:5173'
+//     ],
+//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//     credentials: true
+// }));
 app.use(express.json());
 app.use('/api/devices', deviceRoutes);
 app.use('/api/webhooks', webhookRoutes);
+app.use('/api/cctv', cameraRoutes);
 const server = http.createServer(app);
 
 const PORT = 3000;

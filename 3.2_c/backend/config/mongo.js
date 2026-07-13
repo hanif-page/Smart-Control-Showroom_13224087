@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 async function connectMongo() {
     try {
-        await mongoose.connect('mongodb://localhost:27017/smart_showroom');
+        await mongoose.connect(`${process.env.MONGO_URI}`);
         console.log('[MongoDB] Connected');
     } catch (err) {
         console.error('[MongoDB] Connection error: ', err.message);

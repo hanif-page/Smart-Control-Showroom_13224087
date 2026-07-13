@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 import axios from 'axios';
 
-const SOCKET_URL = 'http://localhost:3000';
+const SOCKET_URL = `${import.meta.env.VITE_API_URL}`;
 
 export function useDeviceSocket() {
   const [devices, setDevices] = useState([]);

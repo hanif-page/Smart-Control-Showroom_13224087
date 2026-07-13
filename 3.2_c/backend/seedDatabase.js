@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Device = require('./models/deviceCompleteModel');
 
 async function populateDummyDataToDB() {
-  await mongoose.connect('mongodb://localhost:27017/smart_showroom');
+  await mongoose.connect(`${process.env.MONGO_URI}`);
 
   await Device.deleteMany({});
   await Device.insertMany([

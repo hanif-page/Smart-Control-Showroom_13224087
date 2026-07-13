@@ -53,25 +53,57 @@ function CameraFit({ targetRef }){
         const box = new THREE.Box3().setFromObject(targetRef.current);
         const center = box.getCenter(new THREE.Vector3());
         const size = box.getSize(new THREE.Vector3());
-        const maxDim = Math.max(size.x, size.y, size.z);
+        
+        // Define the base distance
+        const baseOffset = new THREE.Vector3(
+            size.x * 0.35, 
+            size.y * 0.05, // Lifted slightly higher to get a better downward angle
+            size.z * 0.35
+        );
 
-        camera.position.set(center.x + maxDim, center.y + maxDim * 0.6, center.z + maxDim);
+        // Rotate the offset by 60 degrees around the Y-axis (up/down axis)
+        // Three.js uses radians, so convert 60 degrees to radians
+        const angleInRadians = (90 * Math.PI) / 180;
+        const yAxis = new THREE.Vector3(0, 1, 0);
+        baseOffset.applyAxisAngle(yAxis, angleInRadians);
+
+        // Apply the rotated offset to the center of the room
+        camera.position.set(
+            center.x + baseOffset.x, 
+            center.y + baseOffset.y, 
+            center.z + baseOffset.z
+        );
+        
+        // Look directly at the center of the room
         camera.lookAt(center);
-        camera.near = maxDim / 100;
+        
+        // Lower the 'near' clipping plane so close objects render correctly
+        camera.near = 0.1; 
+        
+        const maxDim = Math.max(size.x, size.y, size.z);
         camera.far = maxDim * 100;
         camera.updateProjectionMatrix();
 
         if (controls) {
-        controls.target.copy(center);
-        controls.update();
+            controls.target.copy(center);
+
+            // Calculate the smallest horizontal dimension of the room
+            const minHorizontalDim = Math.min(size.x, size.z);
+            
+            controls.maxDistance = minHorizontalDim * 0.50; // increase it to extend the min view!
+            
+            // Limit how close the user can zoom in (prevents clipping into center objects)
+            controls.minDistance = 0.5;
+
+            controls.update();
         }
-    }, [targetRef.current]);
+    }, [targetRef, camera, controls]);
 
     return null;
 }
 
 const ShowroomModel = forwardRef(function ShowroomModel({ states }, ref) {
-    const { scene } = useGLTF('/models/room-new.glb');
+    const { scene } = useGLTF('/models/room-new-draco.glb');
     const pointLightRef = useRef();
     const roombaRingRef = useRef();
     const groupRef = useRef();
@@ -149,4 +181,4 @@ export default function Scene3D({ states }) {
     );
 }
 
-useGLTF.preload('/models/room-new.glb')
+useGLTF.preload('/models/room-new-draco.glb')

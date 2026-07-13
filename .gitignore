@@ -6,3 +6,6 @@
 3.2_b/backend/node_modules
 3.2_c/backend/node_modules
 3.2_c/client/node_modules
+
+3.2_c/client/.env
+3.2_c/backend/.env

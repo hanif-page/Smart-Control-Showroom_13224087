@@ -1,11 +1,58 @@
 import { useDeviceSocket } from './hooks/useDeviceSocket';
+import { useState, useEffect } from "react"; // new, for loader
+import { useProgress } from "@react-three/drei"; // new, for loader
 import DeviceCard from './components/DeviceCard';
 import Scene3D from './components/Scene3D';
+import CCTVViewer from './components/CCTVViewer';
+
+function GlobalLoader() {
+    const { progress } = useProgress();
+    const [isVisible, setIsVisible] = useState(true);
+
+    useEffect(() => {
+        if (progress === 100) {
+            // Add a tiny 500ms delay before hiding to ensure the canvas has fully painted
+            const timer = setTimeout(() => setIsVisible(false), 500);
+            return () => clearTimeout(timer);
+        }
+    }, [progress]);
+
+    if (!isVisible) return null;
+
+    return (
+        <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-white">
+            
+            <img 
+                src="/Nakayama_Logo.png" 
+                alt="Nakayama Logo" 
+                className="h-16 mb-6 object-contain"
+            />
+            
+            <span className="text-lg font-medium text-gray-800 mb-4">
+                Loading Nakayama Smart Control Showroom...
+            </span>
+            
+            <div className="w-72 bg-gray-200 rounded-full h-2.5 overflow-hidden">
+                <div 
+                    className="bg-red-600 h-2.5 rounded-full transition-all duration-300 ease-out" 
+                    style={{ width: `${progress}%` }}
+                ></div>
+            </div>
+            
+            <span className="text-sm mt-3 text-gray-500 font-bold tracking-wider">
+                {progress.toFixed(0)}%
+            </span>
+        </div>
+    );
+}
 
 export default function App() {
   const { devices, states, sendCommand } = useDeviceSocket();
 
   return (
+    <>    
+    <GlobalLoader />
+
     <div className="min-h-screen py-4 px-4">
       <div className="max-w-7xl w-[90%] mx-auto">
         <div className="flex items-center gap-3 mb-1">
@@ -17,7 +64,7 @@ export default function App() {
 
         <div className="border border-black rounded-xl pl-3 pr-3 pb-6">
           <h1 className="text-2xl font-bold text-center">
-            Smart Control Showroom Demo (Problem 3.2.b Answer)
+            Smart Control Showroom Demo (Problem 3.2.c Answer)
           </h1>
 
           <section className="flex gap-2">
@@ -57,11 +104,10 @@ export default function App() {
             </section>
   
           </section>
-          
+
           <section className="border border-red-400 rounded-lg p-4 mb-6">
             <h2 className="font-bold mb-4 text-left">CCTV Live Stream</h2>
-            <div className="grid grid-cols-3 gap-4">
-            </div>
+            <CCTVViewer />
           </section>
 
         </div>
@@ -71,5 +117,6 @@ export default function App() {
         </p>
       </div>
     </div>
+    </>
   );
 }
