@@ -33,7 +33,7 @@ export default function DeviceCard({ device, state, onCommand }) {
         </button>
       </div>
 
-      {device.type === 'NatureRemo' && (
+      {/* {device.type === 'NatureRemo' && (
         <div className={`flex items-center gap-2 text-sm mt-2 ${
             isOn ? 'opacity-100' : 'opacity-20'
         }`} 
@@ -61,7 +61,7 @@ export default function DeviceCard({ device, state, onCommand }) {
             +
           </button>
         </div>
-      )}
+      )} */}
 
       {device.type === 'Roomba' && (
         <div className="text-sm mt-2 text-gray-400 text-left capitalize">

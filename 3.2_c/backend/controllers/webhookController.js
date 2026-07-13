@@ -21,7 +21,7 @@ async function simulatePhysicalPush(req, res) {
   if (device && device.protocol === 'MQTT') {
     console.log(`[Hardware Simulator] Acting as Roomba. Publishing MQTT payload...`);
     
-    // 2. Connect to the same broker as the subscriber and PUBLISH the new state
+    // Connect to the same broker as the subscriber and PUBLISH the new state
     const client = mqtt.connect(`mqtt://${device.localIP}`);
     
     client.on('connect', () => {

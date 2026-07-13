@@ -33,5 +33,27 @@ export function useDeviceSocket() {
     await axios.post(`${SOCKET_URL}/api/devices/command`, { deviceID, command });
   };
 
-  return { devices, states, sendCommand };
+  // Physical Device -> Webhook/MQTT -> Web App
+  const simulatePhysicalPush = async (deviceID, currentState, command) => {
+    // Generate the state payload that the physical device would send via MQTT/Webhook
+    const simulatedState = { 
+        ...currentState,
+        power: command === 'turnOn' ? 'on' : 'off' 
+    };
+
+    // If it's the Roomba, simulate its specific MQTT status payload changing
+    if (deviceID.toLowerCase().includes('roomba')) {
+        simulatedState.status = command === 'turnOn' ? 'cleaning' : 'idle';
+    }
+
+    // Push directly to the backend simulation webhook
+    await axios.post(`${SOCKET_URL}/api/webhooks/simulate`, { 
+        deviceID, 
+        state: simulatedState 
+    });
+
+    console.log(`[Frontend] Updated device state from the physical device!`)
+  };
+
+  return { devices, states, sendCommand, simulatePhysicalPush };
 }

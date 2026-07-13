@@ -1,4 +1,4 @@
-// seed.js, It's run once to insert dummy devices
+// seedDatabase.js, It's run once to insert dummy devices
 const mongoose = require('mongoose');
 const Device = require('./models/deviceCompleteModel');
 
@@ -8,30 +8,31 @@ async function populateDummyDataToDB() {
   await Device.deleteMany({});
   await Device.insertMany([
     {
-      deviceID: "room_light01",
-      name: "Room Light 01",
+      deviceID: "main_light_01",
+      name: "Main Light 01",
       type: "SwitchBot",
       protocol: "CloudAPI",
       credentials: { token: "dummy-switchbot-token" },
-      glbObjectID: "mesh_light_meeting01"
+      glbObjectID: "Main_Light_01"
     },
     {
-      deviceID: "main_ac01",
-      name: "Main AC 01",
+      deviceID: "main_tv_01",
+      name: "Main TV 01",
       type: "NatureRemo",
       protocol: "LocalAPI",
       localIP: "192.168.1.50",
       credentials: { token: "dummy-remo-token" },
-      glbObjectID: "mesh_ac_showroom01"
+      glbObjectID: "Main_TV_01"
     },
     {
-      deviceID: "roomba01",
-      name: "Roomba Cleaner 01",
+      deviceID: "main_roomba_01",
+      name: "Main Roomba 01",
       type: "Roomba",
       protocol: "MQTT",
-      localIP: "192.168.1.60",
+      // localIP: "192.168.1.60", 
+      localIP: "broker.emqx.io", // public test brokers which allow free connection 
       credentials: { blid: "dummy-blid", password: "dummy-password" },
-      glbObjectID: "mesh_roomba01"
+      glbObjectID: "Main_Roomba_01"
     }
   ]);
 

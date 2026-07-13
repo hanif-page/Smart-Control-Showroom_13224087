@@ -28,7 +28,7 @@ async function start() {
     // added to support the usage of React Frontend
     initSocket(server);
     await listenToRedisChanges();
-    startPolling();
+    // startPolling();
     await startMqttSubscriber();
     server.listen(PORT, () => {
         console.log(`Server running on port ${PORT}`);

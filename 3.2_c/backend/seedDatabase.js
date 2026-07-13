@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-// seed.js, It's run once to insert dummy devices
+// seedDatabase.js, It's run once to insert dummy devices
 const mongoose = require('mongoose');
 const Device = require('./models/deviceCompleteModel');
 

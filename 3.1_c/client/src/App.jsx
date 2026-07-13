@@ -2,7 +2,7 @@ import { useDeviceSocket } from './hooks/useDeviceSocket';
 import DeviceCard from './components/DeviceCard';
 
 export default function App() {
-  const { devices, states, sendCommand } = useDeviceSocket();
+  const { devices, states, sendCommand, simulatePhysicalPush } = useDeviceSocket();
 
   return (
     <div className="min-h-screen py-4 px-4">
@@ -28,7 +28,7 @@ export default function App() {
                   key={`physical-${d.deviceID}`}
                   device={d}
                   state={states[d.deviceID]}
-                  onCommand={sendCommand}
+                  onCommand={(id, command) => simulatePhysicalPush(id, states[id], command)}
                 />
               ))}
             </div>
