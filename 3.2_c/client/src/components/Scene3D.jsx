@@ -1,6 +1,5 @@
 import { Canvas, useThree } from '@react-three/fiber';
 import { useGLTF, OrbitControls, Text } from '@react-three/drei';
-// import { div } from 'three/src/nodes/math/OperatorNode.js';
 import { useEffect, useRef, forwardRef } from 'react';
 import * as THREE from 'three';
 
@@ -31,10 +30,10 @@ const stateMaterialCache = new Map();
 function getOrCreateStateMaterial(key, color, emissive, emissiveIntensity) {
     if (!stateMaterialCache.has(key)) {
         stateMaterialCache.set(key, new THREE.MeshStandardMaterial({
-        color,
-        emissive,
-        emissiveIntensity,
-        toneMapped: false
+            color,
+            emissive,
+            emissiveIntensity,
+            toneMapped: false
         }));
     }
     const mat = stateMaterialCache.get(key);
@@ -57,12 +56,12 @@ function CameraFit({ targetRef }){
         // Define the base distance
         const baseOffset = new THREE.Vector3(
             size.x * 0.35, 
-            size.y * 0.05, // Lifted slightly higher to get a better downward angle
+            size.y * 0.05,
             size.z * 0.35
         );
 
-        // Rotate the offset by 60 degrees around the Y-axis (up/down axis)
-        // Three.js uses radians, so convert 60 degrees to radians
+        // Rotate the offset by 90 degrees around the Y-axis (up/down axis)
+        // Three.js uses radians, so convert 90 degrees to radians
         const angleInRadians = (90 * Math.PI) / 180;
         const yAxis = new THREE.Vector3(0, 1, 0);
         baseOffset.applyAxisAngle(yAxis, angleInRadians);

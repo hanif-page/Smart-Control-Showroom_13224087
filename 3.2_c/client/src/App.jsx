@@ -23,7 +23,7 @@ function GlobalLoader() {
         <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-white">
             
             <img 
-                src="/Nakayama_Logo.png" 
+                src="/Nakayama.png" 
                 alt="Nakayama Logo" 
                 className="h-16 mb-6 object-contain"
             />
