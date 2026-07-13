@@ -1,14 +1,13 @@
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
-const API_URL = `${import.meta.env.VITE_API_URL}`; // later, Change to Cloudflare Tunnel URL in production setup
-const GO2RTC_URL = `${import.meta.env.VITE_CAMERA_URL}`; // Base URL for your go2rtc server
+const API_URL = `${import.meta.env.VITE_API_URL}`; 
+const GO2RTC_URL = `${import.meta.env.VITE_CAMERA_URL}`; // base URL for the go2rtc server
 
 function CameraTile({ camera }) {
-    // Construct the go2rtc URL. 
-    // Adjust `camera.src` based on the exact property your API returns (e.g., cam_ipad)
-    const streamId = camera.go2rtcStreamKey;
-    const streamUrl = `${GO2RTC_URL}/stream.html?src=${streamId}`;
+    // Construct the go2rtc URL
+    const streamKey = camera.go2rtcStreamKey; // example: cam_ipad
+    const streamURL = `${GO2RTC_URL}/stream.html?src=${streamKey}`;
 
     return (
         <div className="flex flex-col bg-gray-900 rounded-lg overflow-hidden shadow-lg border border-gray-700">
@@ -24,7 +23,7 @@ function CameraTile({ camera }) {
             {/* Video Player Container */}
             <div className="relative w-full aspect-video bg-black">
                 <iframe
-                    src={streamUrl}
+                    src={streamURL}
                     className="absolute top-0 left-0 w-full h-full border-0"
                     allow="autoplay; fullscreen; picture-in-picture"
                     title={camera.name || "CCTV Stream"}

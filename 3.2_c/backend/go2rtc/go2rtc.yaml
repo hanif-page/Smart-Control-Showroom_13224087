@@ -6,7 +6,7 @@ streams:
 
 api:
   listen: ":1984"
-  # origin: "*" # for production, MAKE SURE THIS IS CHANGED TO THE ONLY WEBSITE DOMAIN!
+  # origin: "*" # for development setup
   # origin: "https://tag-land-aluminum-magic.trycloudflare.com" # cloudflared frontend!
   origin: "https://hanif-macbook.taile1094b.ts.net" # tailscale frontend!
 
