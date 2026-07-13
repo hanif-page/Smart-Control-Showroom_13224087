@@ -18,18 +18,9 @@ const cameraRoutes = require('./routes/cameraRoutes'); // added to support the c
 // added to support the usage of React Frontend
 const app = express();
 app.use(cors());
-// app.use(cors({
-//     // Allow both the Tailscale URL and localhost
-//     origin: [
-//         process.env.FRONTEND_URL, 
-//         'http://localhost:5173'
-//     ],
-//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-//     credentials: true
-// }));
 app.use(express.json());
 app.use('/api/devices', deviceRoutes);
-app.use('/api/webhooks', webhookRoutes);
+app.use('/api/webhooks', webhookRoutes); // not directly use, but it's in case it's needed just for getting a POST request to change device state from the physical device later... 
 app.use('/api/cctv', cameraRoutes);
 const server = http.createServer(app);
 

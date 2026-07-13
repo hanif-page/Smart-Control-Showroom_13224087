@@ -7,7 +7,7 @@ async function startMqttSubscriber() {
   const roombaDevices = await Device.find({ protocol: 'MQTT' });
 
   roombaDevices.forEach((device) => {
-    // Replace with real dorita980 local connection using device.credentials
+    // In real implementation, this part needs to be replace with real dorita980 local connection using device.credentials
     console.log(`[MQTT Subscriber] Connecting to ${device.name} at ${device.localIP}`);
 
     const client = mqtt.connect(`mqtt://${device.localIP}`, {
@@ -16,6 +16,7 @@ async function startMqttSubscriber() {
       rejectUnauthorized: false
     });
 
+    // starting the listener
     client.on('connect', () => {
       console.log(`[MQTT Subscriber] Connected to ${device.name}`);
       client.subscribe('#');

@@ -18,7 +18,7 @@ async function listenToRedisChanges() {
   const subscriber = redisClient.duplicate();
   await subscriber.connect();
 
-  // Requirements: redis-cli config set notify-keyspace-events KEA
+  // Requirements: redis-cli config set notify-keyspace-events KEA (source: https://redis.io/docs/latest/develop/pubsub/keyspace-notifications/)
   await subscriber.pSubscribe('__keyevent@0__:set', (key) => {
     if (key.startsWith('device:')) {
       const deviceID = key.replace('device:', '');
