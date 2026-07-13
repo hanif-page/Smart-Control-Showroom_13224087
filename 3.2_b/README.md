@@ -8,7 +8,7 @@
 
 This project implements a device orchestration layer that abstracts multiple IoT communication protocols (Cloud API, Local API, MQTT) behind a single unified command interface, following a **Facade Design Pattern**. It includes a live-syncing Digital Twin dashboard demonstrating bidirectional state consistency between physical devices and their web app representation.
 
-[Quick Demo Video (1:17 minute)](https://drive.google.com/file/d/18IGlYAcE8cfg5r2BhobD9oekoFytkf-H/view?usp=sharing)
+[Quick Demo Video (1:11 minute)](https://drive.google.com/file/d/1WueDMv9ddOkEfI_wK2lAnxorbtRPdTL1/view?usp=sharing)
 
 ## Solution Screenshot (Web App form)
 ![Screenshot 1](./client/public/web_app_screenshot1.png)
@@ -88,11 +88,11 @@ Adding a new device type requires only a new adapter file, so no changes to the 
 
 **Real-time sync layer:** Redis keyspace notifications -> Socket.IO server -> all connected dashboard clients, so every state change (regardless of source) reaches every open browser session simultaneously.
 
-**One-time Redis Keyspace Notifications** 
+<!-- **One-time Redis Keyspace Notifications** 
 ```bash
 # run this in the terminal
 redis-cli config set notify-keyspace-events KEA
-```
+``` -->
 
 ---
 
@@ -108,29 +108,34 @@ redis-cli config set notify-keyspace-events KEA
 6. Adapter executes the vendor-specific command against the physical device
 7. On success, the new state is written to Redis
 8. Redis fires a keyspace notification on that key change
-9. `socket.js` listener catches the notification, reads the updated value, and emits `deviceStateChanged` via Socket.IO
+9. `socket.js` listener catches the notification, reads the updated value, and send the newest update of the Redis data via Socket.IO
 10. Every connected browser session (physical device card + digital twin card) receives the event and updates its UI simultaneously
 
 ### Flow 2 : Physical Device -> Web App (Dashboard)
 
-This covers the case where a device's real state changes independently of the dashboard (manual button press, natural state drift, etc...), keeping the Digital Twin accurate all the times.
+This covers the case where a device's real state changes independently, keeping the Digital Twin accurate all the times. For this demonstration, this flow is triggered via the Physical Devices Control (Simulator) interface.
 
 **For MQTT devices (Roomba):**
-1. `mqttSubscriber.js` maintains a persistent connection to the device's local MQTT broker
-2. Device publishes a state-change message on its own (push-based, no polling)
-3. Subscriber receives the message, writes new state to Redis
-4. Same Redis -> Socket.IO -> dashboard flow same as Flow 1 from steps 8-10
+1. A physical change is simulated by clicking a control on the frontend Simulator.
+2. Frontend sends POST `/api/webhooks/simulate` with `{ deviceID, state }`.
+3. The webhook controller acts as the physical hardware and publishes a real MQTT payload to a unique topic (example: `nakayama/roomba/{deviceID}/state`) on the public test broker.
+4. `mqttSubscriber.js`, which maintains a persistent connection to that same broker, receives the published message.
+5. The subscriber parses the hardware payload, merges it with any unchanged state data, and writes the new state to Redis.
+6. Redis fires a keyspace notification on that key change (key process to making sure the Digital Twin is always updated).
+7. `socket.js` listener catches the notification, reads the updated value, and send the newest update of the Redis data via Socket.IO.
+8. Every connected browser session receives the event and updates its 3D Digital Twin simultaneously.
 
 **For Cloud API / Local API devices (SwitchBot / Nature Remo):**
-1. `statePoller.js` runs on a fixed interval:
-   - Cloud API devices: every 60s (justification: to protects vendor rate quota)
-   - Local API devices: every 15s (justification: because it has no quota limit, same LAN, so we just call it far rapidly that the Cloud API)
-2. Poller fetches the device's actual current state from the vendor
-3. New state is written to Redis
-4. Same Redis -> Socket.IO -> dashboard flow same as Flow 1 from steps 8-10
+1. A physical change is simulated by clicking a control on the frontend Simulator.
+2. Frontend sends POST `/api/webhooks/simulate` with `{ deviceID, state }`.
+3. The webhook controller acts as an incoming webhook push from the vendor, bypassing external routing and directly writing the new state to Redis.
+4. Redis fires a keyspace notification on that key change.
+5. `socket.js` listener catches the notification, reads the updated value, and send the newest update of the Redis data via Socket.IO.
+6. Every connected browser session receives the event and updates its 3D Digital Twin simultaneously.
 
 ### Backend State Reflected in 3D Scene
-`Scene3D.jsx` renders three `boxGeometry` meshes, one per device in the registry (Room Light 01, Main AC 01, Roomba Cleaner 01), each subscribed to the same states object already provided by `useDeviceSocket.js`. Simply, no new backend logic, API routes, or Socket.IO events were added. This component consumes the exact same `deviceStateChanged` event already broadcast in **Flow 1** and **Flow 2** above.
+`Scene3D.jsx` renders the given .glb file. The objects that we are able to control are the light (Main_Light_01), TV (Main_TV_01), and Roomba (Main_Roomba_01), each subscribed to the same states object already provided by `useDeviceSocket.js`. This component consumes the exact same `deviceStateChanged` event already explained in **Flow 1** and **Flow 2** above.
+
 - When `power: "on"`: the corresponding box's material switches to green color.
 - When `power: "off"`: the box reverts to a plain gray color.
 
